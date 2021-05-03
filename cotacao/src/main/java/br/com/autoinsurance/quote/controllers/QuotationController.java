@@ -2,6 +2,7 @@ package br.com.autoinsurance.quote.controllers;
 
 import br.com.autoinsurance.quote.dtos.InsuranceQuoteDTO;
 import br.com.autoinsurance.quote.entities.InsuranceQuote;
+import br.com.autoinsurance.quote.enums.QuotationTypes;
 import br.com.autoinsurance.quote.services.QuotationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,11 +28,25 @@ public class QuotationController {
         return quotationService.getAllQuotations();
     }
 
-    @ApiOperation("Register a new quotation")
-    @PostMapping
-    private ResponseEntity<InsuranceQuoteDTO> postInsuranceQuote(@RequestBody InsuranceQuoteDTO dto) {
-        return quotationService.insertQuotation(dto);
+    @ApiOperation("Register a new vehicle quotation")
+    @PostMapping("vehicle")
+    private ResponseEntity<InsuranceQuoteDTO> postInsuranceVehicleQuote(@RequestBody InsuranceQuoteDTO dto) {
+        return quotationService.insertQuotation(dto, QuotationTypes.VEHICLE);
     }
+
+    @ApiOperation("Register a new vehicle quotation")
+    @PostMapping("life")
+    private ResponseEntity<InsuranceQuoteDTO> postInsuranceLifeQuote(@RequestBody InsuranceQuoteDTO dto) {
+        return quotationService.insertQuotation(dto, QuotationTypes.LIFE);
+    }
+
+
+    @ApiOperation("Register a new vehicle quotation")
+    @PostMapping("house")
+    private ResponseEntity<InsuranceQuoteDTO> postInsuranceHouseQuote(@RequestBody InsuranceQuoteDTO dto) {
+        return quotationService.insertQuotation(dto, QuotationTypes.HOUSE);
+    }
+
 
     @ApiOperation("List of all quotations by customer")
     @GetMapping("/customer/{idCustomer}")

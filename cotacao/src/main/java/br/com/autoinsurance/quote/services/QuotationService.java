@@ -1,8 +1,10 @@
 package br.com.autoinsurance.quote.services;
 
+import br.com.autoinsurance.quote.domains.quotation.QuotationFactory;
 import br.com.autoinsurance.quote.dtos.InsuranceQuoteDTO;
 import br.com.autoinsurance.quote.entities.InsuranceQuote;
 import br.com.autoinsurance.quote.entities.Vehicle;
+import br.com.autoinsurance.quote.enums.QuotationTypes;
 import br.com.autoinsurance.quote.exceptions.QuotationException;
 import br.com.autoinsurance.quote.repositories.InsuranceQuoteRepository;
 import br.com.autoinsurance.quote.repositories.VehicleRepository;
@@ -32,8 +34,8 @@ public class QuotationService {
         return insuranceQuoteRepository.findAll();
     }
 
-    public ResponseEntity<InsuranceQuoteDTO> insertQuotation(InsuranceQuoteDTO dto) {
-         InsuranceQuote newInsuranceQuote = new InsuranceQuote(dto);
+    public ResponseEntity<InsuranceQuoteDTO> insertQuotation(InsuranceQuoteDTO dto, QuotationTypes type) {
+         InsuranceQuote newInsuranceQuote = QuotationFactory.createQuotation(type, dto);
         try {
             newInsuranceQuote.setCreated(LocalDateTime.now());
             newInsuranceQuote = insuranceQuoteRepository.save(newInsuranceQuote);
